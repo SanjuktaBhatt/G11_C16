@@ -13,19 +13,7 @@ def coin_display():
     screen.blit(i,(50*(x+1)+50,240))
     x+=1
  #Collection function   
-def collection(char_rect):
-  x=0
-  for i in coins:
-    coin_rect=i.get_rect(topleft=(50*(x+1)+50,240))
-    x+=1
-    if coin_rect.collidepoint(char_rect.x,char_rect.y):
-      coins.remove(i)
-      return True
 
-def text_display(size,text,r,g,b,x,y):
-    font = pygame.font.Font(None, size)
-    text = font.render(text, 1, (r,g,b))
-    screen.blit(text, (x,y))
 
 size = (400, 400)
 screen = pygame.display.set_mode(size)
@@ -41,7 +29,7 @@ total_time=300
 
 
 carryOn = True
-t1=time.time()
+
 while carryOn:
   for event in pygame.event.get():
     if event.type == pygame.QUIT: 
@@ -59,31 +47,9 @@ while carryOn:
   #display the background and charaacter here
   screen.blit(bg,(bgx,0))
   screen.blit(char,(charx,chary))
-  coins_rect=coin_display()
+  coin_display()
 
-  char_rect=char.get_rect(topleft=(charx,chary))
-  collected=collection(char_rect)
-  
-  #Display and calculate money collected here
-  if collected==True:
-    money+=1000
-  text_display(24,"Money collected: "+str(money),255,0,255,30,10)
-  
-  
-  t2=time.time()
-  time_elapsed=t2-t1
-  time_left=round((total_time-time_elapsed)/60,2)
-  text_display(24,"Time left: "+str(time_left)+"min",255,0,255,260,10)
-  
-  #Close the game
-  if time_elapsed>=totaltime:
-    pygame.time.wait(2000)
-    screen.fill((100,100,255))
-    font = pygame.font.Font(None, 34)
-    text_display(44,"Money collected: "+str(money),255,0,255,10,200)
-    pygame.display.flip()
-    pygame.time.wait(2000)
-    break
+ 
 
   pygame.display.flip()
 pygame.quit()
